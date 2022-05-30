@@ -1,0 +1,4 @@
+# Ignore Backup and Misc files
+*.mru
+*.png
+*.csv
