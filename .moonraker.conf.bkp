@@ -27,6 +27,7 @@ cors_domains =
 [file_manager]
 config_path = /home/pi/klipper_config
 log_path = /home/pi/klipper_logs
+enable_object_processing = True
 
 [octoprint_compat]
 
