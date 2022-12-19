@@ -1,11 +1,9 @@
 [server]
 host = 0.0.0.0
 port = 7125
-enable_debug_logging = False
 klippy_uds_address = /tmp/klippy_uds
 
 [database]
-database_path = /home/pi/.moonraker_database
 
 [authorization]
 trusted_clients = 
@@ -25,33 +23,39 @@ cors_domains =
 	http://*://app.fluidd.xyz
 
 [file_manager]
-config_path = /home/pi/klipper_config
-log_path = /home/pi/klipper_logs
+queue_gcode_uploads = True
 enable_object_processing = True
 
 [octoprint_compat]
 
 [history]
 
+[announcements]
+subscriptions = 
+	mainsail
+
 [update_manager]
 channel = dev
 refresh_interval = 168
+enable_auto_refresh = True
+enable_system_updates = True
 
 [update_manager mainsail]
 type = web
 repo = mainsail-crew/mainsail
 path = ~/mainsail
 
-[update_manager fluidd]
-type = web
-repo = fluidd-core/fluidd
-path = ~/fluidd
-
-[update_manager led_effect]
+[update_manager crowsnest]
 type = git_repo
-path = ~/klipper-led_effect
-origin = https://github.com/julianschill/klipper-led_effect.git
-is_system_service = False
+path = ~/crowsnest
+origin = https://github.com/mainsail-crew/crowsnest.git
+
+[update_manager sonar]
+type = git_repo
+path = ~/sonar
+origin = https://github.com/mainsail-crew/sonar.git
+primary_branch = main
+managed_services = sonar
 
 [update_manager timelapse]
 type = git_repo
@@ -69,11 +73,39 @@ env = /home/pi/.KlipperScreen-env/bin/python
 requirements = scripts/KlipperScreen-requirements.txt
 install_script = scripts/KlipperScreen-install.sh
 
+[update_manager kiauh]
+type = git_repo
+path = ~/kiauh
+origin = https://github.com/th33xitus/kiauh.git
+is_system_service = False
+
+[update_manager CanBoot]
+type = git_repo
+origin = https://github.com/Arksine/CanBoot.git
+path = ~/CanBoot
+is_system_service = False
+
+[update_manager led_effect]
+type = git_repo
+path = ~/klipper-led_effect
+origin = https://github.com/julianschill/klipper-led_effect.git
+is_system_service = False
+
 [update_manager client z_calibration]
 type = git_repo
 path = ~/klipper_z_calibration
 origin = https://github.com/protoloft/klipper_z_calibration.git
 install_script = install.sh
+managed_services = klipper
+
+[update_manager LinearMovevementAnalysis]
+type = git_repo
+path = ~/klipper_linear_movement_analysis
+primary_branch = main
+origin = https://github.com/worksasintended/klipper_linear_movement_analysis.git
+install_script = install.sh
+env = ~/klippy-env/bin/python
+requirements = requirements.txt
 managed_services = klipper
 
 [power 3D_Printer]
@@ -95,6 +127,15 @@ device = switch.filament_box
 token = {secrets.home_assistant.token}
 domain = switch
 
+[power Shop_Vac]
+type = homeassistant
+address = 192.168.1.2
+port = 8123
+protocol = http
+device = switch.plug_5
+token = {secrets.home_assistant.token}
+domain = switch
+
 [mqtt]
 address = 192.168.1.2
 port = 1883
@@ -107,5 +148,11 @@ status_objects =
 	extruder=temperature
 
 [secrets]
-secrets_path = ~/.moonraker_secrets.json
+
+[update_manager ercf-happy_hare]
+type = git_repo
+path = ~/ERCF-Software-V3
+origin = https://github.com/moggieuk/ERCF-Software-V3.git
+install_script = install.sh
+managed_services = klipper
 
